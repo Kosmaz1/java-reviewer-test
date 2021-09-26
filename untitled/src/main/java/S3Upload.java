@@ -1,3 +1,4 @@
+
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
@@ -13,9 +14,9 @@ import java.io.*;
  */
 public class S3Upload {
     public static void main(String[] args) {
-        String bucket_name = "<FMI1>";
-        String file_path = "<FMI2>";
-        String key_name = "<FMI3>";
+        String bucket_name = "aws_s3_bucket";
+        String file_path = "file_name";
+        String key_name = "example.txt";
         String fileContents = readFileContents();
 
         System.out.format("Uploading %s to S3 bucket %s...\n", file_path, bucket_name);
@@ -34,7 +35,7 @@ public class S3Upload {
         String fileContents = "";
         try {
             reader = new BufferedReader(new FileReader(
-                    "C:\\<FMI2>"));
+                    "C:\\example.txt"));
 
             while (true) {
                 fileContents += reader.readLine();
@@ -44,10 +45,18 @@ public class S3Upload {
             }
         } catch (IOException e) {
             System.out.println("Something went wrong");
+        } finally {
+            if(reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    System.out.printf("Something went wrong");
+                }
+            }
         }
-
         return fileContents;
     }
 
 
 }
+
